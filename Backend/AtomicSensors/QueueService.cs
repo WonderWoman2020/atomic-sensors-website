@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AtomicSensors.Services;
+using Microsoft.AspNetCore.Mvc;
 using MQTTnet;
 using MQTTnet.Client;
 using MQTTnet.Server;
@@ -11,8 +12,15 @@ namespace AtomicSensors
         private IMqttClient client;
         private string topic = "sensor/+"; // Plus oznacza subskrybcję 1 poziomu niżej o jakiejkolwiek nazwie
 
-        public QueueService()
+        private readonly MongoDBService _mongoDBService;
+
+        //IServiceProvider _serviceProvider;
+
+        public QueueService(MongoDBService mongoDBService)
         {
+            _mongoDBService = mongoDBService;
+            //_serviceProvider = serviceProvider;
+            //_mongoDBService = serviceProvider.GetRequiredService<MongoDBService>();
             var factory = new MqttFactory();
             client = factory.CreateMqttClient();
         }
@@ -41,6 +49,7 @@ namespace AtomicSensors
                     SensorData sensorData = SensorData.parse(message);
                     Console.WriteLine($"Received message: {sensorData}");
                     // Tutaj można potem dopisać zapisywanie wiadomości do bazy danych z użyciem przyszłej klasy repozytorium
+                    //await _mongoDBService.CreateAsync(sensorData);
                     return Task.CompletedTask;
                 };
 

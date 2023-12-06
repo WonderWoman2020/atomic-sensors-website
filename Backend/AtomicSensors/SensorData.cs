@@ -1,10 +1,16 @@
-﻿namespace AtomicSensors
+﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
+
+namespace AtomicSensors
 {
     public class SensorData
     {
-        public int SensorId { get; private set; }
-        public string SensorType { get; private set; }
-        public double Data { get; private set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string? Id { get; set; } // ID encji w bazie danych
+        public int SensorId { get; set; }
+        public string SensorType { get; set; }
+        public double Data { get; set; }
 
         public SensorData(int sensorId, string sensorType, double data)
         {
