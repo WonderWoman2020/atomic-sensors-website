@@ -4,6 +4,9 @@ namespace AtomicSensors
     {
         public static void Main(string[] args)
         {
+            QueueService queue = new QueueService(); // otwarcie po³¹czenia z kolejk¹
+            queue.ReceiveMessages(); // subskrypcja wszystkich czujników z kolejki i uruchomienie odbierania wiadomoœci
+
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
