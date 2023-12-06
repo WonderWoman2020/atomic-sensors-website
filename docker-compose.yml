@@ -1,0 +1,40 @@
+version: '3.7'
+
+services:
+  database:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: atomic-sensors
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./Database/init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - net
+  
+  queue:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto-queue
+    restart: always
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./Queue/config:/mosquitto/config
+      - ./Queue/log:/mosquitto/log
+      - ./Queue/data:/mosquitto/data
+    networks:
+      - net
+
+
+
+
+
+networks:
+  net:
+    driver: bridge
+    
