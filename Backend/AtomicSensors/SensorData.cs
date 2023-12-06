@@ -29,7 +29,7 @@
 
         override public string ToString()
         {
-            return "Type: " + this.SensorType + ", ID: " + this.SensorId + ", Data: " + this.Data;
+            return $"Type: {SensorType}, ID: {SensorId}, Data: {Data}";
         }
     }
 }

@@ -1,15 +1,18 @@
+using MQTTnet.Client;
+
 namespace AtomicSensors
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            QueueService queue = new QueueService(); // otwarcie po³¹czenia z kolejk¹
-            queue.ReceiveMessages(); // subskrypcja wszystkich czujników z kolejki i uruchomienie odbierania wiadomoœci
+            QueueService queue = new QueueService(); 
+            queue.ReceiveMessages();
 
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddSingleton(queue); // Dodanie naszego serwisu do obs³ugi kolejki do kontera aplikacji jako obiekt ¿yj¹cy ca³¹ aplikacjê
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -33,6 +36,10 @@ namespace AtomicSensors
             app.MapControllers();
 
             app.Run();
+
+            // TODO Wygl¹da na to, ¿e tutaj nie dociera nawet jak siê przegl¹darkê zamknie
+            // odbiór wiadomoœci i tak siê chyba sam zamyka jak siê program wy³¹cza, ale dla porz¹dku mo¿na potem spróbowaæ poprawiæ
+            //queue.Stop().Wait();
         }
     }
 }
