@@ -34,7 +34,9 @@ namespace AtomicSensors
             // Callback function when a message is received
             client.ApplicationMessageReceivedAsync += e =>
             {
-                Console.WriteLine($"Received message: {Encoding.UTF8.GetString(e.ApplicationMessage.PayloadSegment)}");
+                //Console.WriteLine($"Received message: {Encoding.UTF8.GetString(e.ApplicationMessage.PayloadSegment)}");
+                SensorData sensorData = SensorData.parse(Encoding.UTF8.GetString(e.ApplicationMessage.PayloadSegment));
+                Console.WriteLine("Received message: "+sensorData.ToString());
                 // Tutaj można potem dopisać zapisywanie wiadomości do bazy danych z użyciem przyszłej klasy repozytorium
                 return Task.CompletedTask;
             };
