@@ -43,14 +43,14 @@ namespace AtomicSensors
                 Console.WriteLine("Connection with MQTT queue sucsessful");
 
                 // Ustawienie funkcji callback, jaka ma się wykonać, gdy odebrano wiadomość
-                client.ApplicationMessageReceivedAsync += e =>
+                client.ApplicationMessageReceivedAsync += async e =>
                 {
                     string message = Encoding.UTF8.GetString(e.ApplicationMessage.PayloadSegment);
                     SensorData sensorData = SensorData.parse(message);
                     Console.WriteLine($"Received message: {sensorData}");
                     // Tutaj można potem dopisać zapisywanie wiadomości do bazy danych z użyciem przyszłej klasy repozytorium
-                    //await _mongoDBService.CreateAsync(sensorData);
-                    return Task.CompletedTask;
+                    await _mongoDBService.CreateAsync(sensorData);
+                    return; //Task.CompletedTask;
                 };
 
                 // Subskrypcja wszystkich czujników z kolejki

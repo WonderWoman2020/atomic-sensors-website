@@ -18,6 +18,14 @@ namespace AtomicSensors.Controllers
         public async Task<List<SensorData>> Get()
         {
             return await _mongoDBService.GetAsync();
+            // Do testowania
+            /*var data1 = new SensorData(1, "Pressure", 112.5);
+            var data2 = new SensorData(2, "Temperature", 135.7);
+            var list = new List<SensorData>();
+            list.Add(data1);
+            list.Add(data2);
+            return list;*/
+
         }
 
         /*[HttpPost]
