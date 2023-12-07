@@ -25,5 +25,4 @@ public class MongoDBService
         await _sensorDataCollection.InsertOneAsync(sensorData);
         return;
     }
-    //public async Task DeleteAsync(string id) { }
 }

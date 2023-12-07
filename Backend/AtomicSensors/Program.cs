@@ -10,15 +10,14 @@ namespace AtomicSensors
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Add services to the container.
+
             // Konfiguracja i dodanie serwisu do obs³ugi bazy danych
             builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDB"));
-            var dbService = builder.Services.AddSingleton<MongoDBService>();
+            builder.Services.AddSingleton<MongoDBService>();
 
-            //QueueService queue = new QueueService();
-            //queue.ReceiveMessages();
-
-            // Add services to the container.
-            builder.Services.AddSingleton<QueueService>(); // Dodanie naszego serwisu do obs³ugi kolejki do kontera aplikacji jako obiekt ¿yj¹cy ca³¹ aplikacjê
+            // Dodanie naszego serwisu do obs³ugi kolejki do kontera aplikacji jako obiekt ¿yj¹cy ca³¹ aplikacjê
+            builder.Services.AddSingleton<QueueService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -27,6 +26,7 @@ namespace AtomicSensors
 
             var app = builder.Build();
 
+            // Pobranie beana serwisu kolejki z kontenera aplikacji, ¿eby móc uruchomiæ jej metodê odbioru wiadomoœci
             var queue = app.Services.GetService<QueueService>();
             queue.ReceiveMessages();
 

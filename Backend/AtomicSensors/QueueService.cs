@@ -14,13 +14,9 @@ namespace AtomicSensors
 
         private readonly MongoDBService _mongoDBService;
 
-        //IServiceProvider _serviceProvider;
-
         public QueueService(MongoDBService mongoDBService)
         {
             _mongoDBService = mongoDBService;
-            //_serviceProvider = serviceProvider;
-            //_mongoDBService = serviceProvider.GetRequiredService<MongoDBService>();
             var factory = new MqttFactory();
             client = factory.CreateMqttClient();
         }
