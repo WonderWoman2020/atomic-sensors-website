@@ -12,11 +12,14 @@ namespace AtomicSensors
         public string SensorType { get; set; }
         public double Data { get; set; }
 
-        public SensorData(int sensorId, string sensorType, double data)
+        public DateTime Date { get; set; }
+
+        public SensorData(int sensorId, string sensorType, double data, DateTime date)
         {
             SensorId = sensorId;
             SensorType = sensorType;
             Data = data;
+            Date = date;
         }
 
         public static SensorData parse(string data)
@@ -30,7 +33,7 @@ namespace AtomicSensors
             string type = dict["Type"];
             double measuredData = Convert.ToDouble(dict["Data"]); 
 
-            return new SensorData(id, type, measuredData);
+            return new SensorData(id, type, measuredData, DateTime.Now); // Tymczasowa data odbioru, póki nie zrobimy daty w Sensors
         }
 
         override public string ToString()
