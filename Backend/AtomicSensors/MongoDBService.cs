@@ -18,17 +18,30 @@ public class MongoDBService
         _sensorDataCollection = database.GetCollection<SensorData>(mongoDBSettings.Value.CollectionName);
     }
 
-    public async Task<List<SensorData>> GetAsync(string sort_mode, string sort_by, int id_filter, string type_filter, string date_filter)
+    public async Task<List<SensorData>> GetAsync(string? sort_mode, string? sort_by, int? id_filter, string? type_filter, string? date_filter)
     {
+        // Budowanie filtrów
         var filterBuilder = Builders<SensorData>.Filter;
-        var filter = filterBuilder.Eq("SensorId", id_filter) & filterBuilder.Eq("SensorType", type_filter);
+        var sensorIdFilter = (id_filter.HasValue ? filterBuilder.Eq("SensorId", id_filter.Value) : filterBuilder.Empty);
+        var sensorTypeFilter = (type_filter != null ? filterBuilder.Eq("SensorType", type_filter) : filterBuilder.Empty);
+        var filter = sensorIdFilter & sensorTypeFilter;
+
+        // Budowanie sposobu sortowania
         var sortBuilder = Builders<SensorData>.Sort;
-        var sort = sort_mode == "asc" ? sortBuilder.Ascending(sort_by) : sortBuilder.Descending(sort_by);
-        //return await _sensorDataCollection.Find(new BsonDocument()).ToListAsync();
+        var sort = sort_by == null ? null : 
+            (sort_mode == "asc" ? sortBuilder.Ascending(sort_by) :
+            (sort_mode == "desc" ? sortBuilder.Descending(sort_by) : null));
 
-        //return await _sensorDataCollection.AsQueryable<SensorData>().Where(sensor => sensor.SensorId == id_filter);
-
-        return await _sensorDataCollection.Find<SensorData>(filter).Sort(sort).ToListAsync();
+        // Jeśli metoda sortowania nie została podana lub podane zostało
+        // tylko jedno z (sort_mode, sort_by), nie dodaje wywołania metody sortowania niżej
+        // (Sort() nie przyjmuje null'a i nie widzę w sortBuilder czegoś takiego jak ma filterBuilder.Empty)
+        if(sort != null)
+            return await _sensorDataCollection.Find<SensorData>(filter != null ? filter : filterBuilder.Empty)
+                .Sort(sort)
+                .ToListAsync();
+        else
+            return await _sensorDataCollection.Find<SensorData>(filter != null ? filter : filterBuilder.Empty)
+                .ToListAsync();
     }
     public async Task CreateAsync(SensorData sensorData) 
     {
