@@ -19,20 +19,15 @@ public class MongoDBService
     }
 
     public async Task<List<SensorData>> GetAsync(string? sort_mode, string? sort_by, int? id_filter, string? type_filter,
-        DateTime? date_from, DateTime? date_to)//, DateTime? date_eq)
+        DateTime? date_from, DateTime? date_to)
     {
         // Budowanie filtrów
         var filterBuilder = Builders<SensorData>.Filter;
         var sensorIdFilter = (id_filter.HasValue ? filterBuilder.Eq(sensor => sensor.SensorId, id_filter.Value) : filterBuilder.Empty);
         var sensorTypeFilter = (type_filter != null ? filterBuilder.Eq(sensor => sensor.SensorType, type_filter) : filterBuilder.Empty);
 
-        //var dateEqFilter = date_eq.HasValue ? filterBuilder.Eq(sensor => sensor.Date, date_eq) : filterBuilder.Empty;
         var dateFromFilter = date_from.HasValue ? filterBuilder.Gte(sensor => sensor.Date, date_from) : filterBuilder.Empty;
         var dateToFilter = date_to.HasValue ? filterBuilder.Lte(sensor => sensor.Date, date_to) : filterBuilder.Empty;
-
-        // Jeśli podano date_eq, to ono wygrywa i bierz tylko date_eq,
-        // a jeśli nie, to weź zakres dat, jeżeli zostały podane
-        //var dateFilter = date_eq.HasValue ? dateEqFilter : (dateFromFilter & dateToFilter);
         var dateFilter = dateFromFilter & dateToFilter;
 
         // Wszystkie filtry
