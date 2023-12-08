@@ -22,8 +22,8 @@ public class MongoDBService
     {
         // Budowanie filtrów
         var filterBuilder = Builders<SensorData>.Filter;
-        var sensorIdFilter = (id_filter.HasValue ? filterBuilder.Eq("SensorId", id_filter.Value) : filterBuilder.Empty);
-        var sensorTypeFilter = (type_filter != null ? filterBuilder.Eq("SensorType", type_filter) : filterBuilder.Empty);
+        var sensorIdFilter = (id_filter.HasValue ? filterBuilder.Eq(sensor => sensor.SensorId, id_filter.Value) : filterBuilder.Empty);
+        var sensorTypeFilter = (type_filter != null ? filterBuilder.Eq(sensor => sensor.SensorType, type_filter) : filterBuilder.Empty);
         var filter = sensorIdFilter & sensorTypeFilter;
 
         // Budowanie sposobu sortowania
