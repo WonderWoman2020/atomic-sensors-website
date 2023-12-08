@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AtomicSensors.Controllers
 {
-    [Controller]
+    [ApiController]
     [Route("api")]
-    public class SensorDataController: Controller
+    public class SensorDataController: ControllerBase
     {
         private readonly MongoDBService _mongoDBService;
 
