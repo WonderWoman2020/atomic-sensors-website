@@ -1,4 +1,5 @@
-﻿using AtomicSensors.Services;
+﻿using AtomicSensors.Models;
+using AtomicSensors.Services;
 using Microsoft.AspNetCore.Mvc;
 using ServiceStack.Text;
 

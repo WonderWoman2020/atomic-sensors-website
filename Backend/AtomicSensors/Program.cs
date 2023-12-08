@@ -1,6 +1,5 @@
 using AtomicSensors.Models;
 using AtomicSensors.Services;
-using MQTTnet.Client;
 
 namespace AtomicSensors
 {

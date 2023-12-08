@@ -1,11 +1,10 @@
-﻿using AtomicSensors.Services;
-using Microsoft.AspNetCore.Mvc;
+﻿using AtomicSensors.Models;
 using MQTTnet;
 using MQTTnet.Client;
 using MQTTnet.Server;
 using System.Text;
 
-namespace AtomicSensors
+namespace AtomicSensors.Services
 {
     public class QueueService
     {

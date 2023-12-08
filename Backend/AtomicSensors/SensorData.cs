@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 
-namespace AtomicSensors
+namespace AtomicSensors.Models
 {
     public class SensorData
     {

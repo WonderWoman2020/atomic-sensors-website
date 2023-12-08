@@ -1,9 +1,6 @@
 ﻿using AtomicSensors.Models;
 using Microsoft.Extensions.Options;
-using MongoDB.Bson;
 using MongoDB.Driver;
-
-using System.Linq;
 
 namespace AtomicSensors.Services;
 
