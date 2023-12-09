@@ -1,5 +1,7 @@
 using AtomicSensors.Models;
 using AtomicSensors.Services;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace AtomicSensors
 {
@@ -21,7 +23,22 @@ namespace AtomicSensors
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+
+            // Konfiguracja tego, ¿eby Swagger generowa³ interaktywn¹ dokumentacjê z komentarzy w kodzie
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Atomic sensors API",
+                    Description = "Proste API w ASP.NET na potrzeby projektu z SI.NET.",
+                });
+
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
 
             var app = builder.Build();
 
