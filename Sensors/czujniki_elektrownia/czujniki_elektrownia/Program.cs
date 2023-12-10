@@ -24,6 +24,8 @@ namespace czujniki_elektrownia
                 new Thread(radiationSensor.Run).Start();
                 Thread.Sleep(3000);
             }
+            var manualDataInput = new ManualDataInput();
+            new Thread(manualDataInput.Run).Start();
         }
     }
 }

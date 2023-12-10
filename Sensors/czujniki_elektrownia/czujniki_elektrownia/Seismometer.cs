@@ -72,7 +72,11 @@ namespace czujniki_elektrownia
                 try
                 {
                     var data = GenerateData();
-                    var message = $"Type: Seismometer, ID: {SensorId}, Data: {data}";
+
+                    var currentTime = DateTime.Now;
+                    var timestamp = currentTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
+
+                    var message = $"Type: Seismometer, ID: {SensorId}, Data: {data}, Time: {timestamp}";
                     var messagePayload = Encoding.UTF8.GetBytes(message);
 
                     var mqttMessage = new MqttApplicationMessageBuilder()
@@ -84,7 +88,7 @@ namespace czujniki_elektrownia
 
                     client.PublishAsync(mqttMessage, CancellationToken.None);
 
-                    Console.WriteLine(message);
+                    //Console.WriteLine(message);
                     Thread.Sleep(45000);
                 }
                 catch (Exception ex)
