@@ -31,14 +31,15 @@ namespace AtomicSensors.Models
 
             int id = Convert.ToInt32(dict["ID"]);
             string type = dict["Type"];
-            double measuredData = Convert.ToDouble(dict["Data"]); 
+            double measuredData = Convert.ToDouble(dict["Data"]);
+            DateTime date = Convert.ToDateTime(dict["Time"]);
 
-            return new SensorData(id, type, measuredData, DateTime.Now); // Tymczasowa data odbioru, póki nie zrobimy daty w Sensors
+            return new SensorData(id, type, measuredData, date);
         }
 
         override public string ToString()
         {
-            return $"Type: {SensorType}, ID: {SensorId}, Data: {Data}";
+            return $"Type: {SensorType}, ID: {SensorId}, Data: {Data}, Time: {Date}";
         }
     }
 }
