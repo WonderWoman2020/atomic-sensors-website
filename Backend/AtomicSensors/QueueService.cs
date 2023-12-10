@@ -23,7 +23,7 @@ namespace AtomicSensors.Services
         public async Task<MqttClientConnectResult> ConnectToMqttBroker()
         {
             var options = new MqttClientOptionsBuilder()
-                .WithTcpServer("localhost")
+                .WithTcpServer("queue")
                 .WithKeepAlivePeriod(TimeSpan.FromSeconds(25))
                 .Build();
 

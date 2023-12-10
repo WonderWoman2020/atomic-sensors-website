@@ -61,7 +61,7 @@ export class SensorComponent implements OnInit, OnDestroy{
             this.panel[type].values.shift();
         
         this.panel[type].lastValue = value;    
-        this.panel[type].averageValue = this.panel[type].values.reduce((x:any, y:any) => x + y, 0)/this.panel[type].values.lengthl
+        this.panel[type].averageValue = this.panel[type].values.reduce((x:any, y:any) => x + y, 0)/this.panel[type].values.length;
     }
 
     charts: any = {

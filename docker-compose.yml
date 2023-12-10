@@ -11,8 +11,6 @@ services:
       MONGO_INITDB_DATABASE: atomic-sensors
     ports:
       - "27017:27017"
-    volumes:
-      - ./Database/init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     networks:
       - net
   
@@ -30,9 +28,21 @@ services:
     networks:
       - net
 
-
-
-
+  backend:
+    build: backend
+    container_name: backend
+    environment:
+      ConnectionStrings__MongoDB: mongodb://root:root@mongodb:27017 
+      MQTT__Port: 1883
+      MQTT__Host: queue
+      ASPNETCORE_URLS: http://+:5000
+    ports:
+      - "5000:5000"
+    networks: 
+      - net 
+    depends_on: 
+      - database 
+      - queue
 
 networks:
   net:
