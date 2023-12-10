@@ -89,7 +89,7 @@ namespace czujniki_elektrownia
                     client.PublishAsync(mqttMessage, CancellationToken.None);
 
                     //Console.WriteLine(message);
-                    Thread.Sleep(45000);
+                    Thread.Sleep(37000);
                 }
                 catch (Exception ex)
                 {

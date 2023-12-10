@@ -27,7 +27,6 @@ namespace czujniki_elektrownia
                     case "2":
                         start = true;
                         StartSensorThreads();
-                        //new Thread(manualDataInput.Run).Start(); // Uruchomienie wątku do ciągłego wprowadzania danych
                         break;
                     default:
                         Console.WriteLine("Nieprawidłowy wybór, spróbuj ponownie.");
@@ -35,6 +34,9 @@ namespace czujniki_elektrownia
                 }
             }
         }
+        // Metoda do uruchamiania wątków z opóźnieniem
+
+
         static void StartSensorThreads()
         {
             var manualDataInput = new ManualDataInput();
@@ -42,20 +44,25 @@ namespace czujniki_elektrownia
 
             for (int i = 0; i < 4; i++)
             {
-                var tempSensor = new TemperatureSensor(i);
-                var pressureSensor = new PressureSensor(i);
-                var seismometer = new Seismometer(i);
-                var radiationSensor = new RadiationSensor(i);
+                int sensorId = i; // Lokalna zmienna przechowująca wartość i
 
+                var tempSensor = new TemperatureSensor(sensorId);
                 new Thread(tempSensor.Run).Start();
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
+
+                var pressureSensor = new PressureSensor(sensorId);
                 new Thread(pressureSensor.Run).Start();
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
+
+                var seismometer = new Seismometer(sensorId);
                 new Thread(seismometer.Run).Start();
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
+
+                var radiationSensor = new RadiationSensor(sensorId);
                 new Thread(radiationSensor.Run).Start();
-                Thread.Sleep(3000);
+                Thread.Sleep(2000);
             }
         }
+
     }
 }
