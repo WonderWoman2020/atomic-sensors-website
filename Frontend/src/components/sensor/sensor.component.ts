@@ -94,5 +94,12 @@ export class SensorComponent implements OnInit, OnDestroy{
     ngOnDestroy(): void {
         this.subscriptions.forEach((subscription) => subscription.unsubscribe());
     }
+
+    columns: any[] = [
+        { field: 'type', header: 'Sensor Type' },
+        { field: 'ID', header: 'Sensor ID' },
+        { field: 'value', header: 'Value' },
+        { field: 'date', header: 'Date' },
+    ];
     
-}
+}   
