@@ -71,7 +71,11 @@ namespace czujniki_elektrownia
                 try
                 {
                     var data = GenerateData();
-                    var message = $"Type: Radiation, ID: {SensorId}, Data: {data}";
+
+                    var currentTime = DateTime.Now;
+                    var timestamp = currentTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
+
+                    var message = $"Type: Radiation, ID: {SensorId}, Data: {data}, Time: {timestamp}";
                     var messagePayload = Encoding.UTF8.GetBytes(message);
                     var mqttMessage = new MqttApplicationMessageBuilder()
                             .WithTopic(topic)
@@ -82,8 +86,8 @@ namespace czujniki_elektrownia
 
                     client.PublishAsync(mqttMessage, CancellationToken.None);
 
-                    Console.WriteLine(message);
-                    Thread.Sleep(15000);
+                    //Console.WriteLine(message);
+                    Thread.Sleep(17000);
                 }
                 catch (Exception ex)
                 {
