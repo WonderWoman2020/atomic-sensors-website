@@ -8,6 +8,38 @@ namespace czujniki_elektrownia
     {
         static void Main(string[] args)
         {
+            var manualDataInput = new ManualDataInput();
+            bool start = false;
+
+            while (start==false)
+            {
+                Console.WriteLine("Wybierz opcję:");
+                Console.WriteLine("1. Podaj dane z klawiatury");
+                Console.WriteLine("2. Uruchom wysyłanie danych przez wątki");
+
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        manualDataInput.EnterDataOnce();
+                        break;
+                    case "2":
+                        start = true;
+                        StartSensorThreads();
+                        //new Thread(manualDataInput.Run).Start(); // Uruchomienie wątku do ciągłego wprowadzania danych
+                        break;
+                    default:
+                        Console.WriteLine("Nieprawidłowy wybór, spróbuj ponownie.");
+                        break;
+                }
+            }
+        }
+        static void StartSensorThreads()
+        {
+            var manualDataInput = new ManualDataInput();
+            new Thread(manualDataInput.Run).Start();
+
             for (int i = 0; i < 4; i++)
             {
                 var tempSensor = new TemperatureSensor(i);
@@ -24,8 +56,6 @@ namespace czujniki_elektrownia
                 new Thread(radiationSensor.Run).Start();
                 Thread.Sleep(3000);
             }
-            var manualDataInput = new ManualDataInput();
-            new Thread(manualDataInput.Run).Start();
         }
     }
 }
