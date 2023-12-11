@@ -13,6 +13,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 
 import { SensorComponent } from '../components/sensor/sensor.component';
 import { SensorFilterComponent } from '../components/sensor-filter/sensor.filter.component';
+import { MatTableModule } from '@angular/material/table' 
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { SensorFilterComponent } from '../components/sensor-filter/sensor.filter
         FormsModule,
         PanelModule,
         InplaceModule,
+        MatTableModule,
     ],
     providers: [],
     bootstrap:[

@@ -1,21 +1,27 @@
-import { Component, Inject, OnDestroy, OnInit, numberAttribute } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnDestroy, OnInit, numberAttribute } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { BackendData } from '../../services/backendData.service';
 import { isNgContainer } from '@angular/compiler';
 import * as moment from 'moment';
-import { EventService, Events } from '../../services/event.service';
-import * as signalR from '@microsoft/signalr';
-import { Subscription } from 'rxjs';
+import { Subscription, elementAt } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+
+export interface Element {
+    id: number;
+    value: number;
+
+  }
+
 
 
 @Component({
     selector: 'app-sensor',
     templateUrl: './sensor.component.html',
-    styleUrls: ['./sensor.component.scss'],
+    styleUrls: ['./sensor.component.css'],
 })
-export class SensorComponent implements OnInit, OnDestroy{
-
-    constructor(private formBuilder: FormBuilder, private backendDataService: BackendData, private eventService: EventService){
+export class SensorComponent implements OnInit, OnDestroy, AfterViewInit {
+    sensorData: any;
+    constructor(private formBuilder: FormBuilder, private backendDataService: BackendData){
 
     }
 
@@ -35,19 +41,37 @@ export class SensorComponent implements OnInit, OnDestroy{
             
         }, {});
     }
-
-    sensorData: any;
+    
+    tablica: any = [{
+        "id": 1,
+        "value": 24,
+    },{
+        "id": 2,
+        "value": 22,
+    },{
+        "id": 5,
+        "value": 24,
+    }];
 
     getData(){
         this.backendDataService.getData(this.reduceFilter(this.filter)).subscribe((data) => {
             data.map((row: any) => {
-                row.time = moment.default(row.time).format('HH:mm:ss dd-mm-YYYY');
+                //row.time = moment.default(row.time).format('HH:mm:ss dd-mm-YYYY');
+                id: row.sensorId;
+                type: row.sensorType;
+                value: data;
                 return row;
             });
             this.sensorData = data;
         });
+        console.log(this.sensorData);
+        //this.http.get('http://localhost:5000/api/data');
     }
 
+    ngAfterViewInit(): void {
+        this.getData();
+    }
+    
     type: any = {values: [], lastValue: null, averageValue: null};
     panel: any = {
         temperature: {get: this.type},
@@ -72,27 +96,13 @@ export class SensorComponent implements OnInit, OnDestroy{
     };
 
     backendConnection: any;
-    private subscriptions: Subscription[] = [];
 
     ngOnInit(): void {
-        this.backendConnection = new signalR.HubConnectionBuilder().withUrl('http://localhost:4545/api/notify').build();
-
-        this.backendConnection.start().then(
-            () => { 
-                this.backendConnection.push(this.backendConnection.on('Receive', (data:any) =>{
-                    const {type, value} = data;
-                    this.panelAddValue(type, value);
-                }));
-                this.getData(); 
-            });
-
-        this.subscriptions.push(this.eventService.on(Events.FILTER).subscribe((data:any) =>{
-            this.getData();
-        }));
+        
     }
 
     ngOnDestroy(): void {
-        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+        
     }
 
     columns: any[] = [

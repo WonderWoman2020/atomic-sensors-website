@@ -26,6 +26,7 @@ export class BackendData {
     }
 
     getData(filters: any): Observable<any> {
-        return this.http.get('/api/data', { params: filters });
+        return this.http.get('http://localhost:5000/api/data', { params: filters });
     }
+    
 }
