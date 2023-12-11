@@ -6,13 +6,7 @@ import * as moment from 'moment';
 import { Subscription, elementAt } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
-export interface Element {
-    id: number;
-    value: number;
-
-  }
-
-
+import { timer } from 'rxjs';
 
 @Component({
     selector: 'app-sensor',
@@ -22,19 +16,19 @@ export interface Element {
 export class SensorComponent implements OnInit, OnDestroy, AfterViewInit {
     sensorData: any;
     constructor(private formBuilder: FormBuilder, private backendDataService: BackendData){
-
+        
     }
 
     filter: FormGroup = this.formBuilder.group({
         id: undefined,
         type: undefined,
         orderBy: undefined,
-        order: 'ascending',
+        sort_mode: 'asc',
     });
 
     reduceFilter(rawFilter: any){
         return Object.keys(rawFilter).reduce((accumulator, key) => {
-            if(rawFilter[key] !== undefined)
+            if(rawFilter[key] !== undefined && rawFilter[key] !== null)
                 return { ...accumulator, [key]: rawFilter[key]};
             else
                 return accumulator;
@@ -42,34 +36,20 @@ export class SensorComponent implements OnInit, OnDestroy, AfterViewInit {
         }, {});
     }
     
-    tablica: any = [{
-        "id": 1,
-        "value": 24,
-    },{
-        "id": 2,
-        "value": 22,
-    },{
-        "id": 5,
-        "value": 24,
-    }];
 
     getData(){
         this.backendDataService.getData(this.reduceFilter(this.filter)).subscribe((data) => {
             data.map((row: any) => {
-                //row.time = moment.default(row.time).format('HH:mm:ss dd-mm-YYYY');
-                id: row.sensorId;
-                type: row.sensorType;
-                value: data;
+                //row.date = moment.default(row.date).format('HH:mm:ss dd-mm-YYYY');
                 return row;
             });
             this.sensorData = data;
         });
         console.log(this.sensorData);
-        //this.http.get('http://localhost:5000/api/data');
     }
 
     ngAfterViewInit(): void {
-        this.getData();
+        //this.getData();
     }
     
     type: any = {values: [], lastValue: null, averageValue: null};
@@ -79,6 +59,8 @@ export class SensorComponent implements OnInit, OnDestroy, AfterViewInit {
         seismometer: {get: this.type},
         radiation: {get: this.type},
     };
+
+    displayedColumns: any = ['id', 'data', 'sensorId', 'date'];
 
     panelAddValue(type: string, value: number){
         if(this.panel[type].values.length > 100)
@@ -96,13 +78,13 @@ export class SensorComponent implements OnInit, OnDestroy, AfterViewInit {
     };
 
     backendConnection: any;
-
-    ngOnInit(): void {
-        
-    }
-
-    ngOnDestroy(): void {
-        
+  
+    ngOnInit() {
+      this.getData();
+     }
+    
+    ngOnDestroy() {
+      
     }
 
     columns: any[] = [

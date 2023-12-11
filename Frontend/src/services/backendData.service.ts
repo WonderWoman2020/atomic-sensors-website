@@ -26,7 +26,14 @@ export class BackendData {
     }
 
     getData(filters: any): Observable<any> {
-        return this.http.get('http://localhost:5000/api/data', { params: filters });
+        /*let params: string = "?";
+        console.log(filters.value);
+        filters.value.forEach((element:any) => {
+            params = params + element.key + "=" + element.value + "&";
+        });
+        params = params.slice(0,-1);
+        console.log(params);*/
+        return this.http.get('http://localhost:5000/api/data', {params: filters});
     }
     
 }
