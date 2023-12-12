@@ -5,6 +5,7 @@ import { isNgContainer } from '@angular/compiler';
 import * as moment from 'moment';
 import { Subscription, elementAt } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 import { timer } from 'rxjs';
 
