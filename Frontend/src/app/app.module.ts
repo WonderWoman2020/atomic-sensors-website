@@ -12,22 +12,26 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InputSwitchModule } from 'primeng/inputswitch';
 
 import { SensorComponent } from '../components/sensor/sensor.component';
-import { SensorFilterComponent } from '../components/sensor-filter/sensor.filter.component';
 import { MatTableModule } from '@angular/material/table' 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatSortModule} from '@angular/material/sort';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatNativeDateModule} from '@angular/material/core';
+
 
 @NgModule({
     declarations: [
         AppComponent,
         SensorComponent,
-        SensorFilterComponent,
     ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
         AppRoutingModule,
         HttpClientModule, 
-        PrimeNgModule,
         InputSwitchModule,
         ReactiveFormsModule,
         FormsModule,
@@ -35,6 +39,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         InplaceModule,
         MatTableModule,
         NgbModule,
+        MatInputModule,
+        MatSortModule,
+        MatDatepickerModule,
+        MatFormFieldModule,
+        MatNativeDateModule,
+        MatSelectModule,
     ],
     providers: [],
     bootstrap:[

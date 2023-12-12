@@ -1,0 +1,4 @@
+.vertical-scrollable {
+    height: 95vh;
+    overflow-y: scroll;
+}
