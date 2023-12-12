@@ -53,6 +53,12 @@ namespace AtomicSensors
                 app.UseSwaggerUI();
             }
 
+            app.UseCors(x => x
+                        .WithOrigins("http://localhost:4200")
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                        .AllowAnyHeader());
+
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
