@@ -1,26 +1,26 @@
 
 <div>
-    <div class="row-1">xdd</div>
+    <div class="row mt-5"></div>
     <div class="row">
         <div class="col-8 vertical-scrollable" >
-            <table mat-table [dataSource]="sensorData">
+            <table mat-table [dataSource]="sensorData" matSort (matSortChange)="sortData($event)">
                 <ng-container matColumnDef="sensorId">
-                    <th mat-header-cell *matHeaderCellDef style="background-color: white;">sensorId</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color: white;">sensorId</th>
                     <td mat-cell *matCellDef="let element"> {{element.sensorId}} </td>
                 </ng-container>
             
-                <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef style="background-color: white;"> id</th>
+                <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color: white;"> type</th>
                     <td mat-cell *matCellDef="let element"> {{element.sensorType}} </td>
                 </ng-container>
             
                 <ng-container matColumnDef="data">
-                    <th mat-header-cell *matHeaderCellDef style="background-color: white;">data</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color: white;">value</th>
                     <td mat-cell *matCellDef="let element"> {{element.data}} </td>
                 </ng-container>
             
                 <ng-container matColumnDef="date">
-                    <th mat-header-cell *matHeaderCellDef style="background-color: white;">date</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color: white;">date</th>
                     <td mat-cell *matCellDef="let element"> {{element.date}} </td>
                 </ng-container>
                 
@@ -33,7 +33,7 @@
             <form [formGroup]="filter" (ngSubmit)="sendFilter()" >
                 <div class="row">
                     <mat-form-field>
-                        <mat-select formControlName="id">
+                        <mat-select formControlName="id" >
                           <mat-option [value]="'0'">0</mat-option>
                           <mat-option [value]="'1'">1</mat-option>
                           <mat-option [value]="'2'">2</mat-option>
@@ -44,14 +44,14 @@
                 </div>
                 <div class = "row">
                     <mat-form-field>
-                        <mat-select formControlName="selectedSensorType">
+                        <mat-select formControlName="type">
                           <mat-option [value]="'Temperature'">Temperature</mat-option>
                           <mat-option [value]="'Pressure'">Pressure</mat-option>
                           <mat-option [value]="'Radiation'">Radiation</mat-option>
                           <mat-option [value]="'Seismometer'">Seismometer</mat-option>
                           <mat-option [value]="''">All</mat-option>
                         </mat-select>
-                      </mat-form-field>
+                    </mat-form-field>
                 </div>
                 <div class = "row">
                     <mat-form-field>
@@ -64,12 +64,17 @@
                       </mat-form-field>
                 </div>
                 <div class = "row">
-                    <button (click)="json()">Download CSV</button>
+                    <button class="button" type="submit">Filter</button>
                 </div>
-                <div class = "row">
-                    <button (click)="csv()">Download JSON</button>
-                </div>   
-              </form>
+                 
+            </form>
+            <div class = "row mt-5">
+                <button (click)="csv()">Download CSV</button>
+            </div>
+            <div class = "row">
+                <button (click)="json()">Download JSON</button>
+            </div>
+
         </div>
     </div>
 </div>
