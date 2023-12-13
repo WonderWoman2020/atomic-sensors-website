@@ -1,19 +1,14 @@
-import { Component, OnDestroy, OnInit, } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { BackendData } from '../../services/backendData.service';
-import {Sort, MatSortModule} from '@angular/material/sort';
-
-import * as moment from 'moment';
-
-
-import { timer } from 'rxjs';
+import {Sort} from '@angular/material/sort';
 
 @Component({
     selector: 'app-sensor',
     templateUrl: './sensor.component.html',
     styleUrls: ['./sensor.component.css'],
 })
-export class SensorComponent implements OnInit, OnDestroy {
+export class SensorComponent {
     sensorData: any;
     constructor(private formBuilder: FormBuilder, private backendDataService: BackendData){
         
@@ -28,7 +23,13 @@ export class SensorComponent implements OnInit, OnDestroy {
         });
     }
     csv(){
-        //this.backendDataService.downloadCsv(this.filter);
+        this.backendDataService.downloadCsv(this.filterToString()).subscribe((data) => {
+            const a = document.createElement('a');
+            const objectUrl = URL.createObjectURL(data);
+            a.href = objectUrl;
+            a.download = "data.csv";
+            a.click();
+        });
     }
 
     filter: FormGroup = this.formBuilder.group({
@@ -100,15 +101,67 @@ export class SensorComponent implements OnInit, OnDestroy {
 
     sendFilter(){
         this.getData();
+        //this.updateChart();
+    }
+    updateChart(){
+        this.backendDataService.getData(this.filterToString()).subscribe((data) => {
+
+            data.sort((a:any, b:any) => this.compare(a.date, b.date, true));
+            
+            const valuesTemperature = this.sensorData.filter((data1:any) => {
+                return data1.sensorType == 'Temperature';
+            }).map((item:any) => item.data);
+            const datesTemperature = this.sensorData.filter((data1:any) => {
+                return data1.sensorType == 'Temperature';
+            }).map((item:any) => item.date);
+
+
+            const valuesPressure = this.sensorData.filter((data1:any) => {
+                return data1.sensorType == 'Pressure';
+            }).map((item:any) => item.data);
+            const datesPressure = this.sensorData.filter((data1:any) => {
+                return data1.sensorType == 'Pressure';
+            }).map((item:any) => item.date);
+
+            const valuesRadiation = this.sensorData.filter((data1:any) => {
+                return data1.sensorType == 'Radiation';
+            }).map((item:any) => item.data);
+            const datesRadiation = this.sensorData.filter((data1:any) => {
+                return data1.sensorType == 'Radiation';
+            }).map((item:any) => item.date);
+
+            const valuesSeismometer = this.sensorData.filter((data1:any) => {
+                return data1.sensorType == 'Seismometer';
+            }).map((item:any) => item.data);
+            const datesSeismometer = this.sensorData.filter((data1:any) => {
+                return data1.sensorType == 'Seismometer';
+            }).map((item:any) => item.date);
+
+            let chartSeries: Array<any>;
+            
+
+            this.chartData = [{ data: valuesTemperature, label: 'Temperature' },
+            { data: valuesPressure, label: 'Pressure' },
+            { data: valuesRadiation, label: 'Radiation' },
+            { data: valuesSeismometer, label: 'Seismometer' }];
+
+
+            //const dates = data.map((item:any) => item.date);
+            //this.labels = dates;
+
+            //this.labels = [{datesTemperature, label: "Temperature"}, 
+            //{datesPressure, label: "Pressure"}, 
+            //{datesRadiation, label: "Radiation"}, 
+            //{datesSeismometer, label: "Seismometer"}];
+        });
     }
     
     displayedColumns: any = ['type', 'data', 'sensorId', 'date'];
-  
-    ngOnInit() {
-      //this.getData();
-     }
-    
-    ngOnDestroy() {
-      
-    } 
+
+
+    public options: any = { responsive: true };
+    public chartData: Array<any> = [];
+    //public labels: any = ["Temperature", "Pressure", "Seismometer", "Radiation"];
+    public labels: Array<any> = [];
+
 }   
