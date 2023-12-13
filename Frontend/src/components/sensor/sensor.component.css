@@ -1,0 +1,8 @@
+.vertical-scrollable {
+    height: 90vh;
+    overflow-y: scroll;
+}
+
+.my-select-style{
+    padding: 5%;
+  }

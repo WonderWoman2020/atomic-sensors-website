@@ -1,39 +1,26 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, filter } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class BackendData {
 
     constructor(private http: HttpClient) {}
 
-    downloadFile(url: string, params: any): Observable<Blob> {
-
-        let httpParams = new HttpParams();
-        for(const key in params)
-            if(params.hasOwnProperty(key))
-                httpParams.append(key, params[key]);
-        
-        return this.http.get(url, {responseType: 'blob', observe: 'body', params: httpParams});
+    downloadFile(url: string): Observable<Blob> {
+        return this.http.get(url, {responseType: 'blob', observe: 'body'});
     }
 
     downloadJson(filters: any): Observable<any> {
-        return this.downloadFile('/api/data/json', filters);
+        return this.downloadFile('http://localhost:5000/api/data/json'+filters);
     }
 
     downloadCsv(filters: any): Observable<any> {
-        return this.downloadFile('/api/data/csv', filters);
+        return this.downloadFile('http://localhost:5000/api/data/csv'+filters);
     }
 
     getData(filters: any): Observable<any> {
-        /*let params: string = "?";
-        console.log(filters.value);
-        filters.value.forEach((element:any) => {
-            params = params + element.key + "=" + element.value + "&";
-        });
-        params = params.slice(0,-1);
-        console.log(params);*/
-        return this.http.get('http://localhost:5000/api/data', {params: filters});
+        return this.http.get('http://localhost:5000/api/data'+filters, {});
     }
     
 }
