@@ -12,15 +12,15 @@ export class BackendData {
     }
 
     downloadJson(filters: any): Observable<any> {
-        return this.downloadFile('http://localhost:5000/api/data/json'+filters);
+        return this.downloadFile('http://backend:5000/api/data/json'+filters);
     }
 
     downloadCsv(filters: any): Observable<any> {
-        return this.downloadFile('http://localhost:5000/api/data/csv'+filters);
+        return this.downloadFile('http://backend:5000/api/data/csv'+filters);
     }
 
     getData(filters: any): Observable<any> {
-        return this.http.get('http://localhost:5000/api/data'+filters, {});
+        return this.http.get('http://backend:5000/api/data'+filters, {});
     }
     
 }

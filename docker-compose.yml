@@ -44,6 +44,17 @@ services:
       - database 
       - queue
 
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - '4200:4200'
+    environment:
+      - PORT=4200
+    networks:
+      - net
+
+
 networks:
   net:
     driver: bridge
