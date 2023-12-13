@@ -21,11 +21,17 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatNativeDateModule} from '@angular/material/core';
 import { NgChartsModule } from 'ng2-charts';
 
+// widoki i style
+import { TopBarComponent } from './top-bar/top-bar.component';
+import { FooterComponent } from './footer/footer.component';
+
 
 @NgModule({
     declarations: [
         AppComponent,
         SensorComponent,
+        TopBarComponent,
+        FooterComponent
     ],
     imports: [
         BrowserModule,
