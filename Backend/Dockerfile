@@ -9,6 +9,6 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app 
 COPY --from=build-env /app/out . 
 
-HEALTHCHECK --interval=30s --timeout=30s --start-period=20s --retries=3 CMD [ "CMD", "curl", "-f", "http://" ] 
+HEALTHCHECK --interval=30s --timeout=30s --start-period=20s --retries=3 CMD [ "curl", "-f", "http://localhost" ]
 
 ENTRYPOINT [ "dotnet", "AtomicSensors.dll" ]

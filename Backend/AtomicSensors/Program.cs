@@ -13,18 +13,18 @@ namespace AtomicSensors
 
             // Add services to the container.
 
-            // Konfiguracja i dodanie serwisu do obs³ugi bazy danych
+            // Konfiguracja i dodanie serwisu do obsï¿½ugi bazy danych
             builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDB"));
             builder.Services.AddSingleton<MongoDBService>();
 
-            // Dodanie naszego serwisu do obs³ugi kolejki do kontera aplikacji jako obiekt ¿yj¹cy ca³¹ aplikacjê
+            // Dodanie naszego serwisu do obsï¿½ugi kolejki do kontera aplikacji jako obiekt ï¿½yjï¿½cy caï¿½ï¿½ aplikacjï¿½
             builder.Services.AddSingleton<QueueService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
 
-            // Konfiguracja tego, ¿eby Swagger generowa³ interaktywn¹ dokumentacjê z komentarzy w kodzie
+            // Konfiguracja tego, ï¿½eby Swagger generowaï¿½ interaktywnï¿½ dokumentacjï¿½ z komentarzy w kodzie
             builder.Services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -42,7 +42,7 @@ namespace AtomicSensors
 
             var app = builder.Build();
 
-            // Pobranie beana serwisu kolejki z kontenera aplikacji, ¿eby móc uruchomiæ jej metodê odbioru wiadomoœci
+            // Pobranie beana serwisu kolejki z kontenera aplikacji, ï¿½eby mï¿½c uruchomiï¿½ jej metodï¿½ odbioru wiadomoï¿½ci
             var queue = app.Services.GetService<QueueService>();
             queue.ReceiveMessages();
 
@@ -68,8 +68,8 @@ namespace AtomicSensors
 
             app.Run();
 
-            // TODO Wygl¹da na to, ¿e tutaj nie dociera nawet jak siê przegl¹darkê zamknie
-            // odbiór wiadomoœci i tak siê chyba sam zamyka jak siê program wy³¹cza, ale dla porz¹dku mo¿na potem spróbowaæ poprawiæ
+            // TODO Wyglï¿½da na to, ï¿½e tutaj nie dociera nawet jak siï¿½ przeglï¿½darkï¿½ zamknie
+            // odbiï¿½r wiadomoï¿½ci i tak siï¿½ chyba sam zamyka jak siï¿½ program wyï¿½ï¿½cza, ale dla porzï¿½dku moï¿½na potem sprï¿½bowaï¿½ poprawiï¿½
             //queue.Stop().Wait();
         }
     }
