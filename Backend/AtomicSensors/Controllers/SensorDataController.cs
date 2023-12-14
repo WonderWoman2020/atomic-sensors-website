@@ -86,9 +86,9 @@ namespace AtomicSensors.Controllers
                 $"Date from: {date_from}, Date to: {date_to}");
             var list = await _mongoDBService.GetAsync("desc", "Date", null, type_filter, null, null);
             var lastHundredResults = list.Take(100);
-            Console.WriteLine(lastHundredResults.ElementAt(0));
-            Console.WriteLine(lastHundredResults.ToList().Count);
-            Console.WriteLine(lastHundredResults.ToList());
+            //Console.WriteLine(lastHundredResults.ElementAt(0));
+            //Console.WriteLine(lastHundredResults.ToList().Count);
+            //Console.WriteLine(lastHundredResults.ToList());
             double mean = lastHundredResults.Average(val => val.Data);
             double last = lastHundredResults.ElementAt(0).Data;
             Console.WriteLine("[{\"mean\": " + mean + ", \"last\": " + last + "}]");
