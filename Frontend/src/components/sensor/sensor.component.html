@@ -1,26 +1,39 @@
-<div>
+<div class = "container">
+    <!-- Odstęp -->
     <div class="row mt-5"></div>
-    <div class="row">
-        <div class="col-8 vertical-scrollable" >
+
+    <div class = "row">
+        <div class="col-8">
+            <h4>Datatable</h4>
+        </div>
+        <div class="col-2">
+            <button (click)="csv()">Download CSV</button>
+        </div>
+        <div class="col-2">
+            <button (click)="json()">Download JSON</button>
+        </div>
+    </div>
+    <div class="row data-table">
+        <div class="vertical-scrollable" >
             <table mat-table [dataSource]="sensorData" matSort (matSortChange)="sortData($event)">
                 <ng-container matColumnDef="sensorId">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color: white;">sensorId</th>
-                    <td mat-cell *matCellDef="let element"> {{element.sensorId}} </td>
+                    <td mat-cell *matCellDef="let element" class="col-3"> {{element.sensorId}} </td>
                 </ng-container>
             
                 <ng-container matColumnDef="type">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color: white;"> type</th>
-                    <td mat-cell *matCellDef="let element"> {{element.sensorType}} </td>
+                    <td mat-cell *matCellDef="let element" class="col-3"> {{element.sensorType}} </td>
                 </ng-container>
             
                 <ng-container matColumnDef="data">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color: white;">value</th>
-                    <td mat-cell *matCellDef="let element"> {{element.data}} </td>
+                    <td mat-cell *matCellDef="let element" class="col-3"> {{element.data}} </td>
                 </ng-container>
             
                 <ng-container matColumnDef="date">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color: white;">date</th>
-                    <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+                    <td mat-cell *matCellDef="let element" class="col-3"> {{element.date}} </td>
                 </ng-container>
                 
             
@@ -28,6 +41,9 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
         </div>
+    <div>
+
+    <div class="row">
         <div class="col-3">
             <form [formGroup]="filter" (ngSubmit)="sendFilter()" >
                 <div class="row">
@@ -69,12 +85,7 @@
                 </div>
                  
             </form>
-            <div class = "row mt-5">
-                <button (click)="csv()">Download CSV</button>
-            </div>
-            <div class = "row">
-                <button (click)="json()">Download JSON</button>
-            </div>
+
             
         </div>
     </div>
