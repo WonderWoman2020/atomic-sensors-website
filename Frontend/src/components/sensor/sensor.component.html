@@ -103,8 +103,9 @@
         <!--</div>-->
     </div>
 
+    <div class="row mt-5"></div>
     <!-- Wykres -->
-    <!-- 
+     
     <div class = "row">
         <div style="display: block;">
             <canvas baseChart
@@ -117,5 +118,41 @@
                   </canvas>
         </div>
     </div>
-    -->
+    <div class = "row">
+        <div style="display: block;">
+            <canvas baseChart
+                    [type] = "'line'"
+                    [datasets]="chartData2"
+                    [labels]="labels2"
+                    [options]="options"
+                    [legend]="true"
+                   >
+                  </canvas>
+        </div>
+    </div>
+    <div class = "row">
+        <div style="display: block;">
+            <canvas baseChart
+                    [type] = "'line'"
+                    [datasets]="chartData3"
+                    [labels]="labels3"
+                    [options]="options"
+                    [legend]="true"
+                   >
+                  </canvas>
+        </div>
+    </div>
+    <div class = "row">
+        <div style="display: block;">
+            <canvas baseChart
+                    [type] = "'line'"
+                    [datasets]="chartData4"
+                    [labels]="labels4"
+                    [options]="options"
+                    [legend]="true"
+                   >
+                  </canvas>
+        </div>
+    </div>
+    
 </div>

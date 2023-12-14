@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { BackendData } from '../../services/backendData.service';
 import {Sort} from '@angular/material/sort';
 
+
 @Component({
     selector: 'app-sensor',
     templateUrl: './sensor.component.html',
@@ -101,58 +102,69 @@ export class SensorComponent {
 
     sendFilter(){
         this.getData();
-        //this.updateChart();
+        this.updateChart();
     }
     updateChart(){
         this.backendDataService.getData(this.filterToString()).subscribe((data) => {
 
             data.sort((a:any, b:any) => this.compare(a.date, b.date, true));
             
-            const valuesTemperature = this.sensorData.filter((data1:any) => {
+            const valuesTemperature : any[] = this.sensorData.filter((data1:any) => {
                 return data1.sensorType == 'Temperature';
             }).map((item:any) => item.data);
-            const datesTemperature = this.sensorData.filter((data1:any) => {
+            const datesTemperature : any[] = this.sensorData.filter((data1:any) => {
                 return data1.sensorType == 'Temperature';
             }).map((item:any) => item.date);
 
 
-            const valuesPressure = this.sensorData.filter((data1:any) => {
+            const valuesPressure : any[] = this.sensorData.filter((data1:any) => {
                 return data1.sensorType == 'Pressure';
             }).map((item:any) => item.data);
-            const datesPressure = this.sensorData.filter((data1:any) => {
+            const datesPressure : any[] = this.sensorData.filter((data1:any) => {
                 return data1.sensorType == 'Pressure';
             }).map((item:any) => item.date);
 
-            const valuesRadiation = this.sensorData.filter((data1:any) => {
+            const valuesRadiation : any[]= this.sensorData.filter((data1:any) => {
                 return data1.sensorType == 'Radiation';
             }).map((item:any) => item.data);
-            const datesRadiation = this.sensorData.filter((data1:any) => {
+            const datesRadiation : any[] = this.sensorData.filter((data1:any) => {
                 return data1.sensorType == 'Radiation';
             }).map((item:any) => item.date);
 
-            const valuesSeismometer = this.sensorData.filter((data1:any) => {
+            const valuesSeismometer : any[] = this.sensorData.filter((data1:any) => {
                 return data1.sensorType == 'Seismometer';
             }).map((item:any) => item.data);
-            const datesSeismometer = this.sensorData.filter((data1:any) => {
+            const datesSeismometer :any[] = this.sensorData.filter((data1:any) => {
                 return data1.sensorType == 'Seismometer';
             }).map((item:any) => item.date);
 
             let chartSeries: Array<any>;
             
 
-            this.chartData = [{ data: valuesTemperature, label: 'Temperature' },
+            this.chartData = [{ data: valuesTemperature, label: 'Temperature', backgroundColor: ["#ffc1bd"], borderColor: ["#f7564a"] }];/*[{ data: valuesTemperature, label: 'Temperature' },
             { data: valuesPressure, label: 'Pressure' },
             { data: valuesRadiation, label: 'Radiation' },
-            { data: valuesSeismometer, label: 'Seismometer' }];
+            { data: valuesSeismometer, label: 'Seismometer' }];*/
+            this.chartData2 = [{ data: valuesPressure, label: 'Pressure', backgroundColor: ["#a2f59f"], borderColor: ["#43cf3e"] }];
+            this.chartData3 = [{ data: valuesRadiation, label: 'Radiation', backgroundColor: ["#91cefa"], borderColor: ["#4fa8e8"] }];
+            this.chartData4 = [{ data: valuesSeismometer, label: 'Seismometer', backgroundColor: ["#de91ff"], borderColor: ["#a43bd1"]  }];
 
 
             //const dates = data.map((item:any) => item.date);
             //this.labels = dates;
+            this.labels = datesTemperature;
+            this.labels2 = datesPressure;
+            this.labels3 = datesRadiation;
+            this.labels4 = datesSeismometer;
+            console.log(valuesTemperature.length);
+            console.log(datesTemperature.length);
+            console.log(valuesTemperature);
+            console.log(datesTemperature);
 
-            //this.labels = [{datesTemperature, label: "Temperature"}, 
-            //{datesPressure, label: "Pressure"}, 
-            //{datesRadiation, label: "Radiation"}, 
-            //{datesSeismometer, label: "Seismometer"}];
+            /*this.labels = [{datesTemperature, label: "Temperature"}, 
+            {datesPressure, label: "Pressure"}, 
+            {datesRadiation, label: "Radiation"}, 
+            {datesSeismometer, label: "Seismometer"}];*/
         });
     }
     
@@ -161,7 +173,13 @@ export class SensorComponent {
 
     public options: any = { responsive: true };
     public chartData: Array<any> = [];
+    public chartData2: Array<any> = [];
+    public chartData3: Array<any> = [];
+    public chartData4: Array<any> = [];
     //public labels: any = ["Temperature", "Pressure", "Seismometer", "Radiation"];
     public labels: Array<any> = [];
+    public labels2: Array<any> = [];
+    public labels3: Array<any> = [];
+    public labels4: Array<any> = [];
 
 }   

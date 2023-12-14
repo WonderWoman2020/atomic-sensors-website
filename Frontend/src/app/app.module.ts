@@ -24,6 +24,7 @@ import { NgChartsModule } from 'ng2-charts';
 // widoki i style
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { FooterComponent } from './footer/footer.component';
+import { NgChartsConfiguration } from 'ng2-charts';
 
 
 @NgModule({
@@ -53,7 +54,7 @@ import { FooterComponent } from './footer/footer.component';
         MatSelectModule,
         NgChartsModule,
     ],
-    providers: [],
+    providers: [{ provide: NgChartsConfiguration, useValue: { generateColors: false }}],
     bootstrap:[
         AppComponent,
     ]
