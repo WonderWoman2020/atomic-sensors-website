@@ -2,6 +2,7 @@
     <!-- Odstęp -->
     <div class="row mt-5"></div>
 
+    <!-- Przyciski pobierania -->
     <div class = "row">
         <div class="col-8">
             <h4>Datatable</h4>
@@ -13,6 +14,8 @@
             <button (click)="json()">Download JSON</button>
         </div>
     </div>
+
+    <!-- Tabela -->
     <div class="row data-table">
         <div class="vertical-scrollable" >
             <table mat-table [dataSource]="sensorData" matSort (matSortChange)="sortData($event)">
@@ -43,52 +46,64 @@
         </div>
     <div>
 
+    <!-- Filtry -->
     <div class="row">
-        <div class="col-3">
+        <h4>Filters form</h4>
+        <div class="row mt-5"></div>
+        <!--<div class="col-3">-->
             <form [formGroup]="filter" (ngSubmit)="sendFilter()" >
                 <div class="row">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Sensor Id</mat-label>
-                        <mat-select formControlName="id" >
-                            <mat-option [value]="'0'">0</mat-option>
-                            <mat-option [value]="'1'">1</mat-option>
-                            <mat-option [value]="'2'">2</mat-option>
-                            <mat-option [value]="'3'">3</mat-option>
-                            <mat-option [value]="''">All</mat-option>
-                          </mat-select>
-                      </mat-form-field>
+                    <div class="col-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Sensor Id</mat-label>
+                            <select matNativeControl formControlName="id" class="my-select-style">
+                                <option [ngValue]="'0'">0</option>
+                                <option [ngValue]="'1'">1</option>
+                                <option [ngValue]="'2'">2</option>
+                                <option [ngValue]="'3'">3</option>
+                                <option [ngValue]="''">All</option>
+                            </select>
+                        </mat-form-field>
+                    </div>
+                    <div class = "col-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Sensor type</mat-label>
+                            <select matNativeControl formControlName="type" class="my-select-style">
+                                <option [ngValue]="'Temperature'">Temperature</option>
+                                <option [ngValue]="'Pressure'">Pressure</option>
+                                <option [ngValue]="'Radiation'">Radiation</option>
+                                <option [ngValue]="'Seismometer'">Seismometer</option>
+                                <option [ngValue]="''">All</option>
+                            </select>
+                        </mat-form-field>
+                    </div>
+                    <div class = "col-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Start date</mat-label>
+                            <input matInput type="datetime-local" placeholder="start date" formControlName="startDate" class="my-select-style">
+                        </mat-form-field>
+                    </div>
+                    <div class = "col-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>End date</mat-label>
+                            <input matInput type="datetime-local" placeholder="end date" formControlName="endDate" class="my-select-style">
+                        </mat-form-field>
+                    </div>
                 </div>
                 <div class = "row">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Sensor type</mat-label>
-                        <mat-select formControlName="type">
-                            <mat-option [value]="'Temperature'">Temperature</mat-option>
-                            <mat-option [value]="'Pressure'">Pressure</mat-option>
-                            <mat-option [value]="'Radiation'">Radiation</mat-option>
-                            <mat-option [value]="'Seismometer'">Seismometer</mat-option>
-                            <mat-option [value]="''">All</mat-option>
-                          </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class = "row">
-                    <mat-form-field>
-                        <input matInput type="datetime-local" placeholder="start date" formControlName="startDate">
-                      </mat-form-field>
-                </div>
-                <div class = "row">
-                    <mat-form-field>
-                        <input matInput type="datetime-local" placeholder="end date" formControlName="endDate">
-                      </mat-form-field>
-                </div>
-                <div class = "row">
-                    <button class="button" type="submit">Filter</button>
+                    <div class="col-9"></div>
+                    <div class = "col-3">
+                        <button class="button" type="submit" style="width: 50%;">Filter</button>
+                    </div>
                 </div>
                  
             </form>
 
             
-        </div>
+        <!--</div>-->
     </div>
+
+    <!-- Wykres -->
     <!-- 
     <div class = "row">
         <div style="display: block;">
