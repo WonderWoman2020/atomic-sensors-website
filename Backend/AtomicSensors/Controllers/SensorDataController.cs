@@ -1,6 +1,7 @@
 ﻿using AtomicSensors.Models;
 using AtomicSensors.Services;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver.Linq;
 using ServiceStack.Text;
 
 namespace AtomicSensors.Controllers
@@ -76,6 +77,22 @@ namespace AtomicSensors.Controllers
                 $"Date from: {date_from}, Date to: {date_to}");
             var list = await _mongoDBService.GetAsync(sort_mode, sort_by, id_filter, type_filter, date_from, date_to);
             return CsvSerializer.SerializeToCsv(list);
+        }
+
+        [HttpGet("data/stats")]
+        public async Task<string> GetStats(string? sort_mode, string? sort_by, int? id_filter, string? type_filter, DateTime? date_from, DateTime? date_to)
+        {
+            Console.WriteLine($"Sort mode: {sort_mode}, Sort by: {sort_by}, Id filter: {id_filter}, Type filter: {type_filter}, " +
+                $"Date from: {date_from}, Date to: {date_to}");
+            var list = await _mongoDBService.GetAsync("desc", "Date", null, type_filter, null, null);
+            var lastHundredResults = list.Take(100);
+            Console.WriteLine(lastHundredResults.ElementAt(0));
+            Console.WriteLine(lastHundredResults.ToList().Count);
+            Console.WriteLine(lastHundredResults.ToList());
+            double mean = lastHundredResults.Average(val => val.Data);
+            double last = lastHundredResults.ElementAt(0).Data;
+            Console.WriteLine("[{\"mean\": " + mean + ", \"last\": " + last + "}]");
+            return "[{\"mean\": "+mean+", \"last\": "+last+"}]";
         }
 
     }

@@ -25,6 +25,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { FooterComponent } from './footer/footer.component';
 import { NgChartsConfiguration } from 'ng2-charts';
+import { Subscription, timer } from 'rxjs';
 
 
 @NgModule({

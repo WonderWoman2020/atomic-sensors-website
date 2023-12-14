@@ -22,5 +22,9 @@ export class BackendData {
     getData(filters: any): Observable<any> {
         return this.http.get('http://localhost:5000/api/data'+filters, {});
     }
+
+    getStats(filters: any): Observable<any> {
+        return this.http.get('http://localhost:5000/api/data/stats'+filters, {});
+    }
     
 }

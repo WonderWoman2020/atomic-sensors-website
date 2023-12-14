@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { BackendData } from '../../services/backendData.service';
 import {Sort} from '@angular/material/sort';
+import { Subscription, timer } from 'rxjs';
+import { map, interval } from 'rxjs';
 
 
 @Component({
@@ -161,6 +163,7 @@ export class SensorComponent {
             console.log(valuesTemperature);
             console.log(datesTemperature);
 
+
             /*this.labels = [{datesTemperature, label: "Temperature"}, 
             {datesPressure, label: "Pressure"}, 
             {datesRadiation, label: "Radiation"}, 
@@ -181,5 +184,64 @@ export class SensorComponent {
     public labels2: Array<any> = [];
     public labels3: Array<any> = [];
     public labels4: Array<any> = [];
+
+    observable = interval(1000);
+    subscription : any;
+
+    public temperatureMean : number = 0;
+    public temperatureLast : number = 0;
+
+    public pressureMean : number = 0;
+    public pressureLast : number = 0;
+
+    public radiationMean : number = 0;
+    public radiationLast : number = 0;
+
+    public seismometerMean : number = 0;
+    public seismometerLast : number = 0;
+
+    public temperatureStats : any;
+    public pressureStats : any;
+    public radiationStats : any;
+    public seismometerStats : any;
+
+    ngOnInit() : void
+    {
+          this.subscription = this.observable.subscribe(x =>
+            {
+             console.log(x);
+             this.backendDataService.getStats("?type_filter=Temperature").subscribe((data) => {
+                this.temperatureStats = data;
+                console.log(this.temperatureStats);
+                this.temperatureLast = this.temperatureStats[0].last;
+                this.temperatureMean = this.temperatureStats[0].mean;
+            });
+            this.backendDataService.getStats("?type_filter=Pressure").subscribe((data) => {
+                this.pressureStats = data;
+                console.log(this.pressureStats);
+                this.pressureLast = this.pressureStats[0].last;
+                this.pressureMean = this.pressureStats[0].mean;
+            });
+            this.backendDataService.getStats("?type_filter=Radiation").subscribe((data) => {
+                this.radiationStats = data;
+                console.log(this.radiationStats);
+                this.radiationLast = this.radiationStats[0].last;
+                this.radiationMean = this.radiationStats[0].mean;
+            });
+            this.backendDataService.getStats("?type_filter=Seismometer").subscribe((data) => {
+                this.seismometerStats = data;
+                console.log(this.seismometerStats);
+                this.seismometerLast = this.seismometerStats[0].last;
+                this.seismometerMean = this.seismometerStats[0].mean;
+            });
+            }
+            );
+    }
+
+    ngOnDestroy() : void 
+    {
+        this.subscription.unsubscribe();
+    }
+    
 
 }   

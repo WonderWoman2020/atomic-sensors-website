@@ -76,7 +76,7 @@ namespace czujniki_elektrownia
                     var currentTime = DateTime.Now;
                     var timestamp = currentTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
 
-                    var message = $"Type: Pressure, ID: {SensorId}, Data: {data}, Time: {timestamp}";
+                    var message = $"Type= Pressure; ID= {SensorId}; Data= {data}; Time= {timestamp}";
                     var messagePayload = Encoding.UTF8.GetBytes(message);
 
                     var mqttMessage = new MqttApplicationMessageBuilder()

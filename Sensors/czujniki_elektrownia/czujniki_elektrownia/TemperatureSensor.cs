@@ -73,7 +73,7 @@ namespace czujniki_elektrownia
                     var currentTime = DateTime.Now;
                     var timestamp = currentTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
                     
-                    var message = $"Type: Temperature, ID: {SensorId}, Data: {data}, Time: {timestamp}";
+                    var message = $"Type= Temperature; ID= {SensorId}; Data= {data}; Time= {timestamp}";
                     var messagePayload = Encoding.UTF8.GetBytes(message);
 
                     var mqttMessage = new MqttApplicationMessageBuilder()
@@ -85,7 +85,7 @@ namespace czujniki_elektrownia
 
                     client.PublishAsync(mqttMessage, CancellationToken.None).Wait();
 
-                    //Console.WriteLine(message);
+                    Console.WriteLine(message);
                     Thread.Sleep(13000);
                 }
                 catch (Exception ex)

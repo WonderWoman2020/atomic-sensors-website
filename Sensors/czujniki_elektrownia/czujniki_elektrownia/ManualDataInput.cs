@@ -44,7 +44,7 @@ class ManualDataInput
         var timestamp = currentTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
 
         string topic = $"sensor/{sensorType}";
-        string message = $"Type: {char.ToUpper(sensorType[0]) + sensorType.Substring(1)}, ID: {sensorId}, Data: {value}, Time: {timestamp}";
+        string message = $"Type= {char.ToUpper(sensorType[0]) + sensorType.Substring(1)}; ID= {sensorId}; Data= {value}; Time= {timestamp}";
         var messagePayload = Encoding.UTF8.GetBytes(message);
 
         var mqttMessage = new MqttApplicationMessageBuilder()
